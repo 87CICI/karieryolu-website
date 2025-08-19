@@ -401,76 +401,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contactForm');
     
     if (contactForm) {
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
+        contactForm.addEventListener('submit', function(e) {
+            // Let Netlify handle the form submission naturally
+            // No preventDefault() needed - Netlify will process it
             
-            const submitBtn = document.querySelector('#contactForm .btn');
-            const originalText = submitBtn.textContent;
-            
-            // Show loading state
-            submitBtn.textContent = 'Wird gesendet...';
-            submitBtn.disabled = true;
-            
-            try {
-                const formData = {
-                    name: document.getElementById('name').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value,
-                    service: document.getElementById('serviceType').value, // Changed from serviceType to service
-                    message: document.getElementById('message').value
-                };
-                
-                // Send email using EmailJS
-                const response = await emailjs.send(
-                    'YOUR_SERVICE_ID', // Email Service ID
-                    'YOUR_TEMPLATE_ID', // Email Template ID
-                    {
-                        name: formData.name,
-                        email: formData.email,
-                        phone: formData.phone,
-                        service: formData.service,
-                        message: formData.message
-                    }
-                );
-                
-                // Show success message
-                showNotification('Nachricht erfolgreich gesendet! Wir melden uns schnellstmöglich bei Ihnen.', 'success');
-                document.getElementById('contactForm').reset();
-                
-            } catch (error) {
-                console.error('Error sending email:', error);
-                showNotification('Fehler beim Senden der Nachricht. Bitte versuchen Sie es später erneut.', 'error');
-            } finally {
-                // Reset button
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }
+            // Show success message
+            showMessage('Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns schnellstmöglich bei Ihnen.', 'success');
         });
     }
 });
 
-function showFormMessage(message, type) {
-    // Remove existing messages
-    const existingMessage = document.querySelector('.form-success, .form-error');
-    if (existingMessage) {
-        existingMessage.remove();
-    }
+// Helper function to show messages
+function showMessage(text, type) {
+    const contactForm = document.getElementById('contactForm');
     
-    // Create new message
+    // Remove existing messages
+    const existingMessages = contactForm.querySelectorAll('.form-success, .form-error');
+    existingMessages.forEach(msg => msg.remove());
+    
+    // Create message element
     const messageDiv = document.createElement('div');
     messageDiv.className = type === 'success' ? 'form-success' : 'form-error';
-    messageDiv.textContent = message;
+    messageDiv.textContent = text;
     
-    // Insert before form
-    const contactForm = document.getElementById('contactForm');
-    contactForm.parentNode.insertBefore(messageDiv, contactForm);
+    // Insert at top of form
+    contactForm.insertBefore(messageDiv, contactForm.firstChild);
     
-    // Auto-remove after 5 seconds
+    // Scroll to message
+    messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    // Auto-remove after 10 seconds
     setTimeout(() => {
         if (messageDiv.parentNode) {
             messageDiv.remove();
         }
-    }, 5000);
+    }, 10000);
 }
 
 // Form field validation
