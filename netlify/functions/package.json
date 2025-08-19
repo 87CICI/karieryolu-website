@@ -1,0 +1,8 @@
+{
+  "name": "karieryolu-functions",
+  "version": "1.0.0",
+  "description": "Netlify Functions for KarierYolu",
+  "dependencies": {
+    "nodemailer": "^6.9.7"
+  }
+}

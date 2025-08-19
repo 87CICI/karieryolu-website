@@ -9,3 +9,7 @@
   from = "/send-email"
   to = "/.netlify/functions/send-email"
   status = 200
+  force = true
+
+[functions]
+  node_bundler = "esbuild"

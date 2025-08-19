@@ -1,6 +1,8 @@
 const nodemailer = require('nodemailer');
 
 exports.handler = async (event, context) => {
+  console.log('Function triggered:', event.httpMethod);
+  
   // CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -10,6 +12,7 @@ exports.handler = async (event, context) => {
 
   // Handle preflight requests
   if (event.httpMethod === 'OPTIONS') {
+    console.log('Handling OPTIONS request');
     return {
       statusCode: 200,
       headers,
@@ -19,6 +22,7 @@ exports.handler = async (event, context) => {
 
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
+    console.log('Invalid method:', event.httpMethod);
     return {
       statusCode: 405,
       headers,
@@ -27,11 +31,15 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    console.log('Parsing request body');
     const data = JSON.parse(event.body);
     const { name, email, phone, service, message } = data;
 
+    console.log('Received data:', { name, email, service });
+
     // Validate required fields
     if (!name || !email || !message) {
+      console.log('Missing required fields');
       return {
         statusCode: 400,
         headers,
@@ -39,6 +47,7 @@ exports.handler = async (event, context) => {
       };
     }
 
+    console.log('Creating email transporter');
     // Create transporter
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -47,6 +56,8 @@ exports.handler = async (event, context) => {
         pass: process.env.EMAIL_PASS || 'qpxc zvnm thpr qtlb'
       }
     });
+
+    console.log('Email transporter created');
 
     // Email content
     const mailOptions = {
@@ -78,26 +89,30 @@ exports.handler = async (event, context) => {
       `
     };
 
+    console.log('Sending email...');
     // Send email
-    await transporter.sendMail(mailOptions);
+    const result = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', result.messageId);
 
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({ 
         success: true, 
-        message: 'Email sent successfully' 
+        message: 'Email sent successfully',
+        messageId: result.messageId
       })
     };
 
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Error in function:', error);
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({ 
         error: 'Failed to send email',
-        details: error.message 
+        details: error.message,
+        stack: error.stack
       })
     };
   }
