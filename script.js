@@ -401,12 +401,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contactForm');
     
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            // Let Netlify handle the form submission naturally
-            // No preventDefault() needed - Netlify will process it
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            // Show success message
-            showMessage('Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns schnellstmöglich bei Ihnen.', 'success');
+            const submitBtn = document.querySelector('#contactForm .btn');
+            const originalText = submitBtn.textContent;
+            
+            // Show loading state
+            submitBtn.textContent = 'Wird gesendet...';
+            submitBtn.disabled = true;
+            
+            try {
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    serviceType: document.getElementById('serviceType').value,
+                    message: document.getElementById('message').value
+                };
+                
+                // Send email using Netlify Function
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage('Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns schnellstmöglich bei Ihnen.', 'success');
+                    document.getElementById('contactForm').reset();
+                } else {
+                    showMessage(result.error || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Error sending email:', error);
+                showMessage('Fehler beim Senden der Nachricht. Bitte versuchen Sie es später erneut.', 'error');
+            } finally {
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
         });
     }
 });
