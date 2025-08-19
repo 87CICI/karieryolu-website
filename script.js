@@ -397,84 +397,49 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Contact form handling
-document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contactForm');
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
     
-    if (contactForm) {
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.querySelector('#contactForm .btn');
-            const originalText = submitBtn.textContent;
-            
-            // Show loading state
-            submitBtn.textContent = 'Wird gesendet...';
-            submitBtn.disabled = true;
-            
-            try {
-                const formData = {
-                    name: document.getElementById('name').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value,
-                    serviceType: document.getElementById('serviceType').value,
-                    message: document.getElementById('message').value
-                };
-                
-                // Send email using Netlify Function
-                const response = await fetch('/api/send-email', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    showMessage('Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns schnellstmöglich bei Ihnen.', 'success');
-                    document.getElementById('contactForm').reset();
-                } else {
-                    showMessage(result.error || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.', 'error');
-                }
-                
-            } catch (error) {
-                console.error('Error sending email:', error);
-                showMessage('Fehler beim Senden der Nachricht. Bitte versuchen Sie es später erneut.', 'error');
-            } finally {
-                // Reset button
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }
+    const formData = new FormData(this);
+    const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        serviceType: formData.get('serviceType'),
+        message: formData.get('message')
+    };
+
+    // EmailJS senden
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', data)
+        .then(function(response) {
+            showNotification('Nachricht erfolgreich gesendet!', 'success');
+            document.getElementById('contactForm').reset();
+        }, function(error) {
+            showNotification('Fehler beim Senden. Bitte versuchen Sie es später erneut.', 'error');
         });
-    }
 });
 
-// Helper function to show messages
-function showMessage(text, type) {
-    const contactForm = document.getElementById('contactForm');
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 5px;
+        color: white;
+        font-weight: 500;
+        z-index: 1000;
+        ${type === 'success' ? 'background-color: #4CAF50;' : 'background-color: #f44336;'}
+    `;
     
-    // Remove existing messages
-    const existingMessages = contactForm.querySelectorAll('.form-success, .form-error');
-    existingMessages.forEach(msg => msg.remove());
+    document.body.appendChild(notification);
     
-    // Create message element
-    const messageDiv = document.createElement('div');
-    messageDiv.className = type === 'success' ? 'form-success' : 'form-error';
-    messageDiv.textContent = text;
-    
-    // Insert at top of form
-    contactForm.insertBefore(messageDiv, contactForm.firstChild);
-    
-    // Scroll to message
-    messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    
-    // Auto-remove after 10 seconds
     setTimeout(() => {
-        if (messageDiv.parentNode) {
-            messageDiv.remove();
-        }
-    }, 10000);
+        notification.remove();
+    }, 5000);
 }
 
 // Form field validation
