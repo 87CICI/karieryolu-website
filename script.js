@@ -401,54 +401,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contactForm');
     
     if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData);
-            
-            // Validate form
-            if (!data.name || !data.email || !data.serviceType || !data.message) {
-                showFormMessage('Bitte füllen Sie alle Pflichtfelder aus.', 'error');
-                return;
-            }
-            
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(data.email)) {
-                showFormMessage('Bitte geben Sie eine gültige E-Mail-Adresse ein.', 'error');
-                return;
-            }
+            const submitBtn = document.querySelector('#contactForm .btn');
+            const originalText = submitBtn.textContent;
             
             // Show loading state
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.disabled = true;
             submitBtn.textContent = 'Wird gesendet...';
+            submitBtn.disabled = true;
             
             try {
-                const response = await fetch('/send-email', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    service: document.getElementById('serviceType').value, // Changed from serviceType to service
+                    message: document.getElementById('message').value
+                };
                 
-                const result = await response.json();
+                // Send email using EmailJS
+                const response = await emailjs.send(
+                    'YOUR_SERVICE_ID', // Email Service ID
+                    'YOUR_TEMPLATE_ID', // Email Template ID
+                    {
+                        name: formData.name,
+                        email: formData.email,
+                        phone: formData.phone,
+                        service: formData.service,
+                        message: formData.message
+                    }
+                );
                 
-                if (result.success) {
-                    showFormMessage('Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns innerhalb von 24 Stunden bei Ihnen.', 'success');
-                    contactForm.reset();
-                } else {
-                    showFormMessage(result.message || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.', 'error');
-                }
+                // Show success message
+                showNotification('Nachricht erfolgreich gesendet! Wir melden uns schnellstmöglich bei Ihnen.', 'success');
+                document.getElementById('contactForm').reset();
+                
             } catch (error) {
                 console.error('Error sending email:', error);
-                showFormMessage('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.', 'error');
+                showNotification('Fehler beim Senden der Nachricht. Bitte versuchen Sie es später erneut.', 'error');
             } finally {
-                submitBtn.disabled = false;
+                // Reset button
                 submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
             }
         });
     }
