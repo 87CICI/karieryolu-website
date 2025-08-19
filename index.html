@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KarierYolu - Karriereberatung für Expats</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>KarierYolu</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#services" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#pricing" class="nav-link">Preise</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">Über uns</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Kontakt</a>
+                </li>
+                <li class="nav-item">
+                    <div class="language-switcher">
+                        <button onclick="setLanguage('de')" class="lang-btn active">DE</button>
+                        <button onclick="setLanguage('en')" class="lang-btn">EN</button>
+                        <button onclick="setLanguage('tr')" class="lang-btn">TR</button>
+                    </div>
+                </li>
+            </ul>
+            <div class="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="text-gradient">Karriereberatung</span>
+                <br>für Expats in Deutschland
+            </h1>
+            <p class="hero-subtitle">
+                Professionelle CV- & LinkedIn-Optimierung für Ihren Traumjob
+            </p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">Jetzt beraten lassen</a>
+                <a href="#services" class="btn btn-secondary">Unsere Services</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="floating-card card-1">
+                <i class="fas fa-file-alt"></i>
+                <span>CV Optimierung</span>
+            </div>
+            <div class="floating-card card-2">
+                <i class="fab fa-linkedin"></i>
+                <span>LinkedIn Profil</span>
+            </div>
+            <div class="floating-card card-3">
+                <i class="fas fa-briefcase"></i>
+                <span>Job Bewerbung</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Unsere Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>CV Optimierung</h3>
+                    <p>Professionelle Optimierung Ihres Lebenslaufs für den deutschen Arbeitsmarkt</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <h3>LinkedIn Profil</h3>
+                    <p>Optimierung Ihres LinkedIn-Profils für maximale Sichtbarkeit bei Recruitern</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Bewerbungscoaching</h3>
+                    <p>Persönliche Unterstützung bei Jobbewerbungen und Vorstellungsgesprächen</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title">Unsere Preise</h2>
+            <p class="pricing-subtitle">Transparente Preise für professionelle Karriereberatung</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>CV Optimierung</h3>
+                        <div class="price">
+                            <span class="currency">€</span>
+                            <span class="amount">99</span>
+                            <span class="period">einmalig</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Professionelle CV-Analyse</li>
+                        <li><i class="fas fa-check"></i> ATS-optimierte Formatierung</li>
+                        <li><i class="fas fa-check"></i> Deutsche Standards</li>
+                        <li><i class="fas fa-check"></i> 2 Überarbeitungen</li>
+                        <li><i class="fas fa-check"></i> PDF & Word Format</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Jetzt buchen</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Beliebt</div>
+                    <div class="pricing-header">
+                        <h3>LinkedIn Profil</h3>
+                        <div class="price">
+                            <span class="currency">€</span>
+                            <span class="amount">149</span>
+                            <span class="period">einmalig</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Profil-Optimierung</li>
+                        <li><i class="fas fa-check"></i> Keyword-Optimierung</li>
+                        <li><i class="fas fa-check"></i> Headline & Summary</li>
+                        <li><i class="fas fa-check"></i> Empfehlungen</li>
+                        <li><i class="fas fa-check"></i> Networking-Tipps</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Jetzt buchen</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Bewerbungscoaching</h3>
+                        <div class="price">
+                            <span class="currency">€</span>
+                            <span class="amount">199</span>
+                            <span class="period">pro Stunde</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 60 Min. Einzelcoaching</li>
+                        <li><i class="fas fa-check"></i> Bewerbungsstrategie</li>
+                        <li><i class="fas fa-check"></i> Interview-Vorbereitung</li>
+                        <li><i class="fas fa-check"></i> Gehaltsverhandlung</li>
+                        <li><i class="fas fa-check"></i> Follow-up Support</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Jetzt buchen</a>
+                </div>
+            </div>
+            
+            <div class="pricing-note">
+                <p><i class="fas fa-info-circle"></i> Alle Preise verstehen sich inklusive MwSt. Individuelle Pakete auf Anfrage verfügbar.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Über KarierYolu</h2>
+                    <p>Wir sind spezialisiert auf die Unterstützung von Expats und internationalen Fachkräften, die in Deutschland Fuß fassen möchten. Mit unserer Expertise in der deutschen Arbeitskultur und mehrsprachigen Karriereberatung helfen wir Ihnen dabei, Ihre Bewerbungsunterlagen zu optimieren.</p>
+                    <p><strong>Hinweis:</strong> Wir bieten ausschließlich Beratungs- und Optimierungsleistungen. Es werden keine Jobgarantien oder Arbeitsplatzvermittlungen angeboten.</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <h3>500+</h3>
+                            <p>Erfolgreiche Bewerbungen</p>
+                        </div>
+                        <div class="stat">
+                            <h3>95%</h3>
+                            <p>Erfolgsquote</p>
+                        </div>
+                        <div class="stat">
+                            <h3>3</h3>
+                            <p>Sprachen</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Kontaktieren Sie uns</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Lassen Sie uns über Ihre Karriere sprechen</h3>
+                    <p>Füllen Sie das Formular aus und wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Deutschland</span>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Ihr Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Ihre E-Mail" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" placeholder="Telefon (optional)">
+                    </div>
+                    <div class="form-group">
+                        <select id="serviceType" name="serviceType" required>
+                            <option value="">Service auswählen</option>
+                            <option value="cv">CV Optimierung</option>
+                            <option value="linkedin">LinkedIn Profil</option>
+                            <option value="coaching">Bewerbungscoaching</option>
+                            <option value="package">Komplettpaket</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Ihre Nachricht" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Nachricht senden</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>KarierYolu</h3>
+                    <p>Ihr Partner für eine erfolgreiche Karriere in Deutschland</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">CV Optimierung</a></li>
+                        <li><a href="#services">LinkedIn Profil</a></li>
+                        <li><a href="#services">Bewerbungscoaching</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Rechtliches</h4>
+                    <ul>
+                        <li><a href="impressum.html">Impressum</a></li>
+                        <li><a href="datenschutz.html">Datenschutz</a></li>
+                        <li><a href="agb.html">AGB</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Kontakt</h4>
+                    <p>Über das Kontaktformular</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 KarierYolu. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
